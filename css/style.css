@@ -438,7 +438,7 @@ Models Step - style
 }
 .cd-builder-steps .models-list .name {
   display: block;
-  font-size: 3.2rem;
+  font-size: 3rem;
   font-weight: bold;
   margin-top: .2em;
 }
@@ -611,13 +611,13 @@ Colors Step - style
   }
 }
 
-[data-color="white"] {
+[data-color="gray"] {
   /* used to give background color to Color options */
-  background-color: #FFFFFF;
+  background-color: #bbbbbb;
 }
 
-[data-color="grey"] {
-  background-color: #303539;
+[data-color="gold"] {
+  background-color: #e2d300;
 }
 
 [data-color="orange"] {
