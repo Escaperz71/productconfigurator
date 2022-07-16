@@ -27,6 +27,8 @@ img {
   max-width: 100%;
 }
 
+
+
 /* -------------------------------- 
 
 Home Link
@@ -620,12 +622,24 @@ Colors Step - style
   background-color: #e2d300;
 }
 
-[data-color="orange"] {
-  background-color: #cf5a16;
+[data-color="intense"] {
+  background-color: #1b76ffbb;
 }
 
-[data-color="perl"] {
-  background-color: #d1d1d1;
+[data-color="red"] {
+  background-color: #da0202;
+}
+
+[data-color="rose"] {
+  background-color: #b4005a;
+}
+
+[data-color="darkblue"] {
+  background-color: #000f97;
+}
+
+[data-color="blue"] {
+  background-color: #404cbb;
 }
 
 /* -------------------------------- 
