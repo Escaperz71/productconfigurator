@@ -3,64 +3,62 @@ jQuery(document).ready(function($){
 		this.element = element;
 		this.stepsWrapper = this.element.children('.cd-builder-steps');
 		this.steps = this.element.find('.builder-step');
-		//store some specific bulider steps
 		this.models = this.element.find('[data-selection="models"]'); 
 		this.summary;
 		this.optionsLists = this.element.find('.options-list');
-		//bottom summary 
+		//podsumowanie
 		this.fixedSummary = this.element.find('.cd-builder-footer');
 		this.modelPreview = this.element.find('.selected-product').find('img');
 		this.totPriceWrapper = this.element.find('.tot-price').find('b');
-		//builder navigations
+		//nawigacja
 		this.mainNavigation = this.element.find('.cd-builder-main-nav');
 		this.secondaryNavigation = this.element.find('.cd-builder-secondary-nav');
-		//used to check if the builder content has been loaded properly
+		//sprawdza, czy wszystko sie poprawnie zaladowalo
 		this.loaded = true;
 		
-		// bind builder events
 		this.bindEvents();
 	}
 
 	ProductBuilder.prototype.bindEvents = function() {
 		var self = this;
 
-		//detect click on the left navigation
+		//wykrywa klikniecie na nawigacje z lewej strony
 		this.mainNavigation.on('click', 'li:not(.active)', function(event){
 			event.preventDefault();
 			self.loaded && self.newContentSelected($(this).index());
 		});
 
-		//detect click on bottom fixed navigation
+		//wykrywa klikniecie na dole
 		this.secondaryNavigation.on('click', '.nav-item li:not(.buy)', function(event){ 
 			event.preventDefault();
 			var stepNumber = ( $(this).parents('.next').length > 0 ) ? $(this).index() + 1 : $(this).index() - 1;
 			self.loaded && self.newContentSelected(stepNumber);
 		});
-		//detect click on one element in an options list (e.g, models, accessories)
+		//wykrywa klik na liscie u gory (podsumowanie, kolory itd)
 		this.optionsLists.on('click', '.js-option', function(event){
 			self.updateListOptions($(this));
 		});
-		//detect clicks on customizer controls (e.g., colors ...)
-		this.stepsWrapper.on('click', '.cd-product-customizer a', function(event){
+		//wykrywa klik podczas "ubierania" sprzetu
+ 		this.stepsWrapper.on('click', '.cd-product-customizer a', function(event){
 			event.preventDefault();
 			self.customizeModel($(this));
 		});
 	};
 
 	ProductBuilder.prototype.newContentSelected = function(nextStep) {
-		//first - check if a model has been selected - user can navigate through the builder
+		//sprawdza, czy produkt zostal wybrany
 		if( this.fixedSummary.hasClass('disabled') ) {
-			//no model has been selected - show alert
+			//jesli nie - pokazuje alert 
 			this.fixedSummary.addClass('show-alert');
 		} else {
-			//model has been selected so show new content 
-			//first check if the color step has been completed - in this case update the product bottom preview
+			//jezeli zostal wybrany, przechodzi dalej
+			//sprawdza, czy kolor zostal wybrany
 			if( this.steps.filter('.active').is('[data-selection="colors"]') ) {
-				//in this case, color has been changed - update the preview image
+				//jezeli kolor zostal zmieniony, zaktualizuj zdjecie
 				var imageSelected = this.steps.filter('.active').find('.cd-product-previews').children('.selected').children('img').attr('src');
 				this.modelPreview.attr('src', imageSelected);
 			}
-			//if Summary is the selected step (new step to be revealed) -> update summary content
+			//zaktualizuj podglad produktu na dole
 			if( nextStep + 1 >= this.steps.length ) {
 				this.createSummary();
 			}
@@ -74,11 +72,11 @@ jQuery(document).ready(function($){
 	ProductBuilder.prototype.showNewContent = function(nextStep) {
 		var actualStep = this.steps.filter('.active').index() + 1;
 		if( actualStep < nextStep + 1 ) {
-			//go to next section
+			//nawiguj do nastepnej sekcji
 			this.steps.eq(actualStep-1).removeClass('active back').addClass('move-left');
 			this.steps.eq(nextStep).addClass('active').removeClass('move-left back');
 		} else {
-			//go to previous section
+			//powroc do poprzedniej sekcji
 			this.steps.eq(actualStep-1).removeClass('active back move-left');
 			this.steps.eq(nextStep).addClass('active back').removeClass('move-left');
 		}
@@ -98,10 +96,9 @@ jQuery(document).ready(function($){
 	ProductBuilder.prototype.createSummary = function() {
 		var self = this;
 		this.steps.each(function(){
-			//this function may need to be updated according to your builder steps and summary
 			var step = $(this);
 			if( $(this).data('selection') == 'colors' ) {
-				//create the Color summary
+				//podsumowanie - kolor
 				var colorSelected = $(this).find('.cd-product-customizer').find('.selected'),
 					color = colorSelected.children('a').data('color'),
 					colorName = colorSelected.data('content'),
@@ -130,32 +127,31 @@ jQuery(document).ready(function($){
 		var self = this;
 		
 		if( listItem.hasClass('js-radio') ) {
-			//this means only one option can be selected (e.g., models) - so check if there's another option selected and deselect it
+			//pozwala na wybranie tylko jednej opcji w produktach 
 			var alreadySelectedOption = listItem.siblings('.selected'),
 				price = (alreadySelectedOption.length > 0 ) ? -Number(alreadySelectedOption.data('price')) : 0;
 
-			//if the option was already selected and you are deselecting it - price is the price of the option just clicked
+			//odznaczenie opcji
 			( listItem.hasClass('selected') ) 
 				? price = -Number(listItem.data('price'))
 				: price = Number(listItem.data('price')) + price;
 
-			//now deselect all the other options
+			//odznacz wszystkie opcje
 			alreadySelectedOption.removeClass('selected');
-			//toggle the option just selected
+			//przelacz opcje
 			listItem.toggleClass('selected');
-			//update totalPrice - only if the step is not the Models step
+			//zaktualizuj totalPrice
 			(listItem.parents('[data-selection="models"]').length == 0) && self.updatePrice(price);
 		} else {
-			//more than one options can be selected - just need to add/remove the one just clicked
+			//mozna wybrac jedna niz wiecej opcji
 			var price = ( listItem.hasClass('selected') ) ? -Number(listItem.data('price')) : Number(listItem.data('price'));
-			//toggle the option just selected
+			//przelacz opcje
 			listItem.toggleClass('selected');
-			//update totalPrice
+			//zaktualizuj totalPrice
 			self.updatePrice(price);
 		}
 		
 		if( listItem.parents('[data-selection="models"]').length > 0 ) {
-			//since a model has been selected/deselected, you need to update the builder content
 			self.updateModelContent(listItem);
 		}
 	};
@@ -166,13 +162,11 @@ jQuery(document).ready(function($){
 			var modelType = model.data('model'),
 				modelImage = model.find('img').attr('src');
 
-			//need to update the product image in the bottom fixed navigation
 			this.modelPreview.attr('src', modelImage);
 
-			//need to update the content of the builder according to the selected product
-			//first - remove the contet which refers to a different model
+			//usun tresc odnoszaca sie do innego modelu
 			this.models.siblings('li').remove();
-			//second - load the new content
+			//zaladuj nowa tresc
 			$.ajax({
 		        type       : "GET",
 		        dataType   : "html",
@@ -185,32 +179,31 @@ jQuery(document).ready(function($){
 		        	self.models.after(data);
 		        	self.loaded = true;
 		        	model.addClass('loaded');
-		        	//activate top and bottom navigations
+		        	//aktywuj nawigacje
 		        	self.fixedSummary.add(self.mainNavigation).removeClass('disabled show-alert');
-		        	//update properties of the object
+		        	//zaktualizuj dane obiektu
 					self.steps = self.element.find('.builder-step');
 					self.summary = self.element.find('[data-selection="summary"]');
-					//detect click on one element in an options list
+					//wykrywa klik na liscie opcji
 					self.optionsLists.off('click', '.js-option');
 					self.optionsLists = self.element.find('.options-list');
 					self.optionsLists.on('click', '.js-option', function(event){
 						self.updateListOptions($(this));
 					});
 
-					//this is used not to load the animation the first time new content is loaded
+					//nie wczytuj animacji przy pierwszym wczytaniu nowej zawartosci
 					self.element.find('.first-load').removeClass('first-load');
 		        },
 		        error     : function(jqXHR, textStatus, errorThrown) {
-		            //you may want to show an error message here
 		        }
 			});
 
-			//update price (no adding/removing)
+			//zaktualizuj cene
 			this.totPriceWrapper.text(model.data('price'));
 		} else {
-			//no model has been selected
+			//nie wybrano produktu
 			this.fixedSummary.add(this.mainNavigation).addClass('disabled');
-			//update price
+			//zaktualizuj cene
 			this.totPriceWrapper.text('0');
 
 			this.models.find('.loaded').removeClass('loaded');
@@ -221,7 +214,7 @@ jQuery(document).ready(function($){
 		var parent = target.parent('li')
 			index = parent.index();
 		
-		//update final price
+		//zaktualizuj podsumowanie
 		var price = ( parent.hasClass('selected') )
 			? 0
 			: Number(parent.data('price')) - parent.siblings('.selected').data('price');
@@ -237,7 +230,6 @@ jQuery(document).ready(function($){
 
 	if( $('.cd-product-builder').length > 0 ) {
 		$('.cd-product-builder').each(function(){
-			//create a productBuilder object for each .cd-product-builder
 			new ProductBuilder($(this));
 		});
 	}

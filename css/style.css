@@ -1,8 +1,4 @@
-/* -------------------------------- 
-
-Primary style
-
--------------------------------- */
+/* Glowny styl */
 *, *::after, *::before {
   box-sizing: border-box;
 }
@@ -28,12 +24,8 @@ img {
 }
 
 
+/* Home */
 
-/* -------------------------------- 
-
-Home Link
-
--------------------------------- */
 .cd-nugget-info {
   position: relative;
   display: block;
@@ -45,7 +37,7 @@ Home Link
   border-radius: 4px;
 }
 .cd-nugget-info::before, .cd-nugget-info::after {
-  /* back arrow */
+  /* strzalka */
   content: '';
   position: absolute;
   width: 10px;
@@ -95,11 +87,8 @@ Home Link
   }
 }
 
-/* -------------------------------- 
+/* Glowne komponenty */
 
-Main Components 
-
--------------------------------- */
 .cd-product-builder {
   height: 100vh;
   overflow: hidden;
@@ -136,19 +125,16 @@ Main Components
   transition: visibility .7s;
 }
 .cd-builder-steps .builder-step.first-load {
-  /* hide content uploaded via Ajax */
+  /* ukrywa tresci uzywajac Ajax */
   display: none;
 }
 
-/* -------------------------------- 
+/* Styling krokow */
 
-Step content - basic style
-
--------------------------------- */
 .cd-step-content {
   padding: 1.8em 0 3em;
   opacity: 0;
-  /* this is the animation of a section moving right (go back to a prev step) - selection already made */
+  /* animacja */
   -webkit-animation: cd-center-to-right .5s 0s backwards;
           animation: cd-center-to-right .5s 0s backwards;
 }
@@ -160,14 +146,14 @@ Step content - basic style
   font-size: 2.4rem;
 }
 .cd-step-content .steps-indicator {
-  /* visible on mobile only - used to show the current step number */
+  /* tylko wersja mobilna, steps */
   position: absolute;
   right: 0;
   bottom: 2px;
   color: #5D7C89;
 }
 .cd-step-content .options-list > li {
-  /* basic style for list of options */
+  /* lista opcji */
   border: 2px solid #EDEDED;
   border-radius: 4px;
   margin-bottom: 20px;
@@ -185,21 +171,19 @@ Step content - basic style
   width: 30px;
 }
 .cd-step-content .radio::after, .cd-step-content .radio::before, .cd-step-content .check::after, .cd-step-content .check::before {
-  /* used to create the check icon and yellow circle/square dot ( when element is selected) */
+  /* ikona zolta */
   position: absolute;
   top: 0;
   left: 0;
   content: '';
   height: 100%;
   width: 100%;
-  /* Force hardware acceleration */
   -webkit-transform: translateZ(0);
           transform: translateZ(0);
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
 }
 .cd-step-content .radio::before, .cd-step-content .check::before {
-  /* yellow circle/square */
   border: 2px solid #EDEDED;
   background: #ffffff;
   -webkit-transition: background-color .3s, border-color .3s, -webkit-transform .3s;
@@ -208,7 +192,7 @@ Step content - basic style
   transition: background-color .3s, transform .3s, border-color .3s, -webkit-transform .3s;
 }
 .cd-step-content .radio::after, .cd-step-content .check::after {
-  /* check icon */
+  /* ikona z ptaszkiem */
   background: url(../img/cd-icon-check.svg) no-repeat center center;
 }
 .cd-step-content .radio::before {
@@ -227,7 +211,7 @@ Step content - basic style
           animation: cd-bounce .5s;
 }
 .active .cd-step-content {
-  /* this is the animation of the selected step */
+  /* animacja wybranego krokiu */
   opacity: 1;
   -webkit-transform: translateX(0);
       -ms-transform: translateX(0);
@@ -236,12 +220,12 @@ Step content - basic style
           animation: cd-right-to-center .5s .2s backwards;
 }
 .move-left .cd-step-content {
-  /* this is the animation of a section moving left - selection already made */
+  /* animacja w lewo */
   -webkit-animation: cd-center-to-left .5s 0s backwards;
           animation: cd-center-to-left .5s 0s backwards;
 }
 .active.back .cd-step-content {
-  /* this is the animation of the selected step - moving down*/
+  /* animacja w dol */
   -webkit-animation: cd-left-to-center .5s .2s backwards;
           animation: cd-left-to-center .5s .2s backwards;
 }
@@ -274,7 +258,6 @@ Step content - basic style
 }
 @media only screen and (min-width: 1024px) {
   .cd-step-content {
-    /* this padding takes care of both top and bottom fixed navigations */
     padding: 220px 0 140px;
     max-width: 1000px;
     margin: 0 auto;
@@ -427,11 +410,8 @@ Step content - basic style
             transform: scale(1.5);
   }
 }
-/* -------------------------------- 
+/* Kroki dla produktow */
 
-Models Step - style
-
--------------------------------- */
 .cd-builder-steps .models-list {
   text-align: center;
 }
@@ -455,7 +435,7 @@ Models Step - style
   margin-bottom: 1em;
 }
 .cd-builder-steps .models-list .selected .radio::before {
-  /* show a loading animation while you wait for the HTML to be loaded */
+  /* loader */
   background: transparent;
   border-color: #EDEDED;
   border-right-color: #FFB500;
@@ -466,7 +446,6 @@ Models Step - style
           animation: cd-load .6s infinite;
 }
 .cd-builder-steps .models-list .selected.loaded .radio::before {
-  /* content has been loaded - show the yellow circle + check icon */
   background: #FFB500;
   border-color: #FFB500;
   -webkit-transform: scale(1.5);
@@ -497,11 +476,8 @@ Models Step - style
             transform: rotate(360deg);
   }
 }
-/* -------------------------------- 
+/* Kolory */
 
-Colors Step - style
-
--------------------------------- */
 .cd-product-previews {
   position: relative;
   margin: 4.5em 0;
@@ -546,7 +522,7 @@ Colors Step - style
   margin-right: 0;
 }
 .cd-product-customizer li::before, .cd-product-customizer li::after {
-  /* this is used as tooltip to show color name */
+  /* chmurka */
   position: absolute;
   left: 50%;
   -webkit-transform: translateX(-50%) translateY(-5px);
@@ -560,7 +536,7 @@ Colors Step - style
   transition: opacity .2s, visibility .2s, transform .2s, -webkit-transform .2s;
 }
 .cd-product-customizer li::before {
-  /* this is the tooltip triangle */
+  /* trojkat */
   content: '';
   bottom: 100%;
   height: 0;
@@ -570,7 +546,7 @@ Colors Step - style
   border-top-width: 10px;
 }
 .cd-product-customizer li::after {
-  /* this is the tooltip content */
+  /* srodek chmurki */
   content: attr(data-content);
   background-color: rgba(237, 237, 237, 0.8);
   white-space: nowrap;
@@ -586,7 +562,6 @@ Colors Step - style
           transform: translateX(-50%);
 }
 .cd-product-customizer a {
-  /* replace text with bg color */
   display: inline-block;
   overflow: hidden;
   text-indent: 100%;
@@ -614,7 +589,6 @@ Colors Step - style
 }
 
 [data-color="gray"] {
-  /* used to give background color to Color options */
   background-color: #bbbbbb;
 }
 
@@ -642,11 +616,8 @@ Colors Step - style
   background-color: #404cbb;
 }
 
-/* -------------------------------- 
+/* Akcesoria */
 
-Accessories Step - style
-
--------------------------------- */
 .cd-builder-steps .accessories-list > li {
   text-align: center;
   padding: 2em 1.5em;
@@ -682,7 +653,6 @@ Accessories Step - style
     right: 32px;
   }
   .cd-builder-steps .accessories-list .price {
-    /* 32px (right padding) + 44px (.check width) + 26px (margin between .check and .price) */
     right: 102px;
     margin: 0;
     font-size: 2.2rem;
@@ -698,11 +668,8 @@ Accessories Step - style
   }
 }
 
-/* -------------------------------- 
+/* Podsumowanie */
 
-Summary Step - style
-
--------------------------------- */
 .cd-builder-steps .summary-list > li {
   position: relative;
   margin: 2em 0;
@@ -714,7 +681,6 @@ Summary Step - style
   letter-spacing: .1em;
 }
 .cd-builder-steps .summary-list h2::before {
-  /* this is the line below the step label */
   content: '';
   display: block;
   height: 2px;
@@ -803,11 +769,8 @@ Summary Step - style
   }
 }
 
-/* -------------------------------- 
+/* Nawigacja u gory */
 
-Builder top navigation
-
--------------------------------- */
 .cd-product-builder .main-header {
   display: none;
 }
@@ -824,7 +787,7 @@ Builder top navigation
     background: #ffffff;
   }
   .cd-product-builder .main-header::after {
-    /* this is to create the linear gradient below the header */
+    /* Gradient */
     content: '';
     position: absolute;
     top: 100%;
@@ -877,11 +840,8 @@ Builder top navigation
   }
 }
 
-/* -------------------------------- 
+/* Dol*/
 
-Builder fixed bottom summary
-
--------------------------------- */
 .cd-builder-footer {
   position: fixed;
   z-index: 3;
@@ -897,17 +857,17 @@ Builder fixed bottom summary
   transition: transform .3s, -webkit-transform .3s;
 }
 .cd-builder-footer.disabled {
-  /* no product model has been selected yet - hide navigation */
+  /* nie wybrano produktu - ukryj nawigacje */
   -webkit-transform: translateY(100%);
       -ms-transform: translateY(100%);
           transform: translateY(100%);
 }
 .cd-builder-footer .selected-product {
-  /* visible on desktop only */
+  /* tylko na pc  */
   display: none;
 }
 .cd-builder-footer .alert {
-  /* this is the notification to select a model - visible on desktop only */
+  /* wybierz produkt - tylko pc */
   display: none;
 }
 @media only screen and (min-width: 1024px) {
@@ -969,7 +929,6 @@ Builder fixed bottom summary
     margin-top: 4px;
   }
   .cd-builder-footer.disabled .selected-product {
-    /* translateX is equal to img width (197px) + img margin-right (27px) */
     -webkit-transform: translateX(-224px) translateY(-50%);
         -ms-transform: translateX(-224px) translateY(-50%);
             transform: translateX(-224px) translateY(-50%);
@@ -1030,7 +989,6 @@ Builder fixed bottom summary
   background: rgba(93, 124, 137, 0.5);
 }
 .step-1 .cd-builder-secondary-nav .prev {
-  /* if models are visible, do not show the prev link */
   opacity: 0;
 }
 .step-1 .cd-builder-secondary-nav .next {
@@ -1042,7 +1000,7 @@ Builder fixed bottom summary
   height: 100%;
 }
 .cd-builder-secondary-nav .nav-item ul::after {
-  /* this is the arrow icon */
+  /* strzalka */
   content: '';
   position: absolute;
   height: 16px;
@@ -1128,7 +1086,7 @@ Builder fixed bottom summary
     width: 56px;
     border-radius: 50%;
     background: #EDEDED;
-    /* replace text with image */
+    /* zamien tekst na img */
     color: transparent;
     overflow: hidden;
     text-indent: 100%;
