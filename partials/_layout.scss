@@ -1,11 +1,11 @@
-// breakpoints
+// breakpointy dla responsywnosci
    
 $S:     480px;   
 $M:     768px;     
 $L:     1024px;  
 $XL:    1480px;     
 
-// media queries
+// dla mediow
 
 @mixin MQ($canvas) {
   @if $canvas == S {
@@ -22,7 +22,7 @@ $XL:    1480px;
   }
 }
 
-// super light grid system
+// grid system
 
 @mixin column($percentage, $float-direction:left) {
   width: 100% * $percentage;
